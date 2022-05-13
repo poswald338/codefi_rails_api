@@ -25,7 +25,6 @@ module Api
       end
 
       def create
-        byebug
         result = BaseApi::Users.new_user(params)
         render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
         payload = {

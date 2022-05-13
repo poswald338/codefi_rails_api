@@ -8,6 +8,11 @@ Rails.application.routes.draw do
         get :me
         post :create
       end
+      namespace :posts do
+        post :create
+        get :index
+        get :post_by_id
+      end
     end
   end
 end

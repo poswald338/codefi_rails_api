@@ -60,6 +60,7 @@ group :development do
   # The commented out gem below speeds up spring, but is currently not compatible with latest version of Rails, it should be compatible shortly,
   # check projects github to subscribe to updates
   # gem 'spring-watcher-listen'
+  gem 'rack-cors'
 
 end
 
