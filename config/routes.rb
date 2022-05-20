@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         get :me
         post :create
       end
-      resources :posts, only: [:create, :update, :destroy]
+      resources :posts, only: [:create, :update, :destroy, :index]
       namespace :posts do
         get :post_by_id
       end

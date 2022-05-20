@@ -10,4 +10,11 @@ module Posts
     ServiceContract.success(post)
 
   end
+
+  def self.get_all_posts
+    posts = Post.all
+    return ServiceContract.error('Error retrieving posts.') unless posts
+
+    ServiceContract.success(posts)
+  end
 end
