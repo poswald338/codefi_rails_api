@@ -2,7 +2,7 @@ module Api
   module V1
 
     class PostsController < Api::V1::ApplicationController
-      skip_before_action :authenticate, only: [:index]
+      # skip_before_action :authenticate, only: [:index]
       
       def create
         result = Posts.create_post(get_params, @current_user)

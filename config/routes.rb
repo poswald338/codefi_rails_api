@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         delete :logout
         get :me
         post :create
+        post :update_profile_pic
       end
       resources :posts, only: [:create, :update, :destroy, :index]
       namespace :posts do

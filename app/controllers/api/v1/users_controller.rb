@@ -7,6 +7,7 @@ module Api
       skip_before_action :authenticate, only: %i[login create]
 
       def login
+        byebug
         result = BaseApi::Auth.login(params[:email], params[:password], @ip)
         render_error(errors: 'User not authenticated', status: 401) and return unless result.success?
 
@@ -25,10 +26,21 @@ module Api
       end
 
       def create
-        result = BaseApi::Users.new_user(params)
+        result = BaseApi::Users.new_user(create_params)
         render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
         payload = {
           user: UserBlueprint.render_as_hash(result.payload, view: :normal)
+        }
+        #  TODO: Invite user to accept invitation via registered email
+        render_success(payload: payload)
+      end
+
+      def update_profile_pic
+        byebug
+        result = BaseApi::Users.new_prof_pic(@current_user, params[:photo])
+        render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
+        payload = {
+          user: UserBlueprint.render_as_hash(result.payload, view: :prof_pic)
         }
         #  TODO: Invite user to accept invitation via registered email
         render_success(payload: payload)
@@ -44,6 +56,13 @@ module Api
         render_success(payload: { validated: false }) and return if user.nil?
         render_success(payload: { validated: true })
       end
+
+      private
+
+      def create_params
+        params.permit(:human_name, :email, :password, :city, :state, :zip, :pet_name, :pet_nickname, :breed, :bio, :birthday, :photo)
+      end
+
     end
   end
 end

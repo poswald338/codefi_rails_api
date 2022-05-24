@@ -4,13 +4,25 @@ module BaseApi
   module Users
     def self.new_user(params)
       user = User.new(
-        first_name: params[:first_name],
-        last_name: params[:last_name],
+        human_name: params[:first_name],
         email: params[:email],
-        phone: params[:phone],
-        password: params[:password],
-        password_confirmation: params[:password_confirmation]
+        city: params[:city],
+        state: params[:state],
+        zip: params[:zip],
+        pet_name: params[:pet_name],
+        pet_nickname: params[:pet_nickname],
+        breed: params[:breed],
+        bio: params[:bio],
+        birthday: params[:birthday],
+        password: params[:password]
       )
+      user.save!
+      return ServiceContract.error('Error saving user.') unless user.valid?
+
+      ServiceContract.success(user)
+    end
+    def self.new_prof_pic(user, params)
+      user[:photo] << params
       user.save!
       return ServiceContract.error('Error saving user.') unless user.valid?
 
@@ -23,5 +35,6 @@ module BaseApi
 
       ServiceContract.success(payload: user)
     end
+
   end
 end

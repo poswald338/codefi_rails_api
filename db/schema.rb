@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_20_001056) do
+ActiveRecord::Schema.define(version: 2022_05_24_004043) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -92,8 +92,6 @@ ActiveRecord::Schema.define(version: 2022_05_20_001056) do
 
   create_table "users", force: :cascade do |t|
     t.string "email"
-    t.string "first_name"
-    t.string "last_name"
     t.string "phone"
     t.string "password_digest"
     t.boolean "invitation_accepted", default: false
@@ -101,6 +99,15 @@ ActiveRecord::Schema.define(version: 2022_05_20_001056) do
     t.datetime "invitation_expiration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "human_name"
+    t.string "state"
+    t.string "city"
+    t.string "zip"
+    t.string "pet_name"
+    t.string "pet_nickname"
+    t.string "breed"
+    t.datetime "birthday"
+    t.text "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
