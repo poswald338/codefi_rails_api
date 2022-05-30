@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         get :me
         post :create
         post :update_profile_pic
+        get :get_user_by_id
       end
       resources :posts, only: [:create, :update, :destroy, :index]
       namespace :posts do

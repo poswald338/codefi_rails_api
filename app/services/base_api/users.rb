@@ -14,7 +14,8 @@ module BaseApi
         breed: params[:breed],
         bio: params[:bio],
         birthday: params[:birthday],
-        password: params[:password]
+        password: params[:password],
+        photo: params[:photo]
       )
       user.save!
       return ServiceContract.error('Error saving user.') unless user.valid?
@@ -22,9 +23,17 @@ module BaseApi
       ServiceContract.success(user)
     end
     def self.new_prof_pic(user, params)
-      user[:photo] << params
+      
+      user.photo.attach(params)
       user.save!
       return ServiceContract.error('Error saving user.') unless user.valid?
+
+      ServiceContract.success(user)
+    end
+
+    def self.get_user(id)
+      user = User.find(id)
+      return ServiceContract.error('Could not find user.') unless user
 
       ServiceContract.success(user)
     end

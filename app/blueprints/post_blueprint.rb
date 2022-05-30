@@ -1,8 +1,7 @@
 class PostBlueprint < Blueprinter::Base 
   identifier :id
-  fields :description, :user_id
+  fields :description, :post_creator, :date
 
   view :normal do
-    fields :description, :user_id
   end
 end

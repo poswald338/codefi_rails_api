@@ -4,7 +4,7 @@ module BaseApi
   # Handles user authentication (login, logout)
   module Auth
     def self.login(email, password, ip)
-      byebug
+      
       # will return nil if no user found, will return false if the try authenticate doesn't work
       user = User.find_by(email: email).try(:authenticate, password)
 

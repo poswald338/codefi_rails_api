@@ -21,6 +21,8 @@
 
 # The model that represents the User
 class User < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   has_secure_password validations: false
   has_many :posts
   has_many :likes
@@ -76,4 +78,13 @@ class User < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  def photo_url
+    if self.photo.attached?
+      return url_for(self.photo)
+    else
+      return ''
+    end
+  end
+
 end

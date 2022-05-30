@@ -5,6 +5,7 @@ module Api
       # skip_before_action :authenticate, only: [:index]
       
       def create
+        byebug
         result = Posts.create_post(get_params, @current_user)
           render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
           payload = {
@@ -14,7 +15,7 @@ module Api
       end
 
       def index
-        result = Posts.get_all_posts
+        result = Posts.get_all_posts(params, @current_user)
           render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
           payload = {
             post: PostBlueprint.render_as_hash(result.payload, view: :normal)
