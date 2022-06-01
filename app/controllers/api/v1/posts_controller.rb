@@ -2,7 +2,7 @@ module Api
   module V1
 
     class PostsController < Api::V1::ApplicationController
-      # skip_before_action :authenticate, only: [:index]
+      # skip_before_action :authenticate, only: [:create]
       
       def create
         byebug
@@ -26,7 +26,7 @@ module Api
       private
 
       def get_params
-        params.require(:post).permit(:description)
+        params.permit(:description, :photo)
       end
     end
   end

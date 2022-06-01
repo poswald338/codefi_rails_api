@@ -11,7 +11,7 @@ module Api
         render_error(errors: 'User not authenticated', status: 401) and return unless result.success?
 
         payload = {
-          user: UserBlueprint.render_as_hash(result.payload[:user], view: :login),
+          user: UserBlueprint.render_as_hash(result.payload[:user]),
           token: TokenBlueprint.render_as_hash(result.payload[:token])
         }
         render_success(payload: payload)
@@ -51,6 +51,26 @@ module Api
       def get_user_by_id
         result = BaseApi::Users.get_user(params[:id])
         render_error(errors: 'There was a problem fetching user', status: 400) and return unless result.success?
+        payload = {
+          user: UserBlueprint.render_as_hash(result.payload, view: :normal)
+        }
+        #  TODO: Invite user to accept invitation via registered email
+        render_success(payload: payload)
+      end
+
+      def follow
+        result = BaseApi::Users.follow_user(params[:id], @current_user)
+        render_error(errors: 'There was a problem completing request', status: 400) and return unless result.success?
+        payload = {
+          user: UserBlueprint.render_as_hash(result.payload, view: :normal)
+        }
+        #  TODO: Invite user to accept invitation via registered email
+        render_success(payload: payload)
+      end
+
+      def unfollow
+        result = BaseApi::Users.unfollow_user(params[:id], @current_user)
+        render_error(errors: 'There was a problem completing request', status: 400) and return unless result.success?
         payload = {
           user: UserBlueprint.render_as_hash(result.payload, view: :normal)
         }

@@ -9,9 +9,12 @@ Rails.application.routes.draw do
         post :create
         post :update_profile_pic
         get :get_user_by_id
+        post :follow
+        post :unfollow
       end
-      resources :posts, only: [:create, :update, :destroy, :index]
+      resources :posts, only: [:index]
       namespace :posts do
+        post :create
         get :post_by_id
       end
     end

@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   belongs_to :user
-  has_many_attached :photos
+  has_one_attached :photo
   has_many :post_likes
   has_many :likes, through: :post_likes
 
@@ -13,6 +13,14 @@ class Post < ApplicationRecord
   def date 
     new_date = self.created_at.strftime('%F')
     return new_date
+  end
+
+  def post_img_path
+    if self.photo.attached?
+      return url_for(self.photo)
+    else
+      return ''
+    end
   end
 
   def post_creator

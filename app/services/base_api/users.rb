@@ -45,5 +45,20 @@ module BaseApi
       ServiceContract.success(payload: user)
     end
 
+    def self.follow_user(id, user)
+      user.following << id if !user.following.to_set.include?(id)
+      user.save!
+      return ServiceContract.error('Error following user.') unless user.valid?
+
+      ServiceContract.success(user)
+    end
+    def self.unfollow_user(id, user)
+      user.following.delete(id) if user.following.to_set.include?(id)
+      user.save!
+      return ServiceContract.error('Error following user.') unless user.valid?
+
+      ServiceContract.success(user)
+    end
+
   end
 end

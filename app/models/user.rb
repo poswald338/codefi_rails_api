@@ -30,9 +30,14 @@ class User < ApplicationRecord
   has_many :user_roles
   has_many :roles, through: :user_roles
   has_one_attached :photo
+  # has_many :followers
+  # has_many :following
 
   validates :email, uniqueness: true
 
+  serialize :followers, Array
+  serialize :following, Array
+  
   scope :invite_not_expired, -> { where('invitation_expiration > ?', DateTime.now) }
   scope :invite_token_is, ->(invitation_token) { where(invitation_token: invitation_token) }
 
@@ -40,6 +45,7 @@ class User < ApplicationRecord
   before_create :generate_invitation_token
   before_save :generate_invitation_token, if: :will_save_change_to_invitation_token?
   after_commit :invite_user, if: :saved_change_to_invitation_token?
+
 
   def generate_token!(ip)
     token = Token.create(
