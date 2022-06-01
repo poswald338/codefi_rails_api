@@ -16,6 +16,10 @@ Rails.application.routes.draw do
       namespace :posts do
         post :create
         get :post_by_id
+        delete :remove
+        post :edit
+        post :like_post
+        post :unlike_post
       end
     end
   end

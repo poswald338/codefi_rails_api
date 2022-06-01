@@ -3,10 +3,12 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_one_attached :photo
-  has_many :post_likes
-  has_many :likes, through: :post_likes
+  # has_many :post_likes
+  # has_many :likes, through: :post_likes
 
   validates :description, presence: true, length: {maximum: 250}
+
+  serialize :likes, Array
 
   scope :my_posts, -> {where(user_id: current_user.id)}
 
