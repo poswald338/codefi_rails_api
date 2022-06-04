@@ -4,7 +4,7 @@ module BaseApi
   module Users
     def self.new_user(params)
       user = User.new(
-        human_name: params[:first_name],
+        human_name: params[:human_name],
         email: params[:email],
         city: params[:city],
         state: params[:state],

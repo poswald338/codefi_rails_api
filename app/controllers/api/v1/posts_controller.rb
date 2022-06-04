@@ -2,10 +2,9 @@ module Api
   module V1
 
     class PostsController < Api::V1::ApplicationController
-      # skip_before_action :authenticate, only: [:create]
+      # skip_before_action :authenticate, only: [:index]
       
       def create
-        byebug
         result = Posts.create_post(get_params, @current_user)
           render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
           payload = {
@@ -56,7 +55,7 @@ module Api
       private
 
       def get_params
-        params.permit(:description, :photo)
+        params.permit(:description, :photo, :format)
       end
     end
   end
